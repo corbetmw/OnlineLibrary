@@ -2,9 +2,11 @@
 
 {% block content %}
     <div id="bookList">
+    <br>
     <h1>
         Books
     </h1>
+    <br>
     {% if books %}
         <table class="table table-bordered table-striped" id="bookTable">
             <thead>
@@ -18,8 +20,10 @@
             <tbody>
             {% for book in books %}
                 <tr>
-                    <th scope="row">
-                        <a class="btn btn-outline-primary my-2 my-sm-0" href="/books/{{ book.id }}/">{{ book.id }}</a>
+                    <th >
+                        <a class="btn btn-outline-primary my-2 my-sm-0" href="/books/{{ book.id }}/">{{ book.id }}
+                                <span class="ion-ios-list-outline"></span>
+                        </a>
                     </th>
                     <td>{{ book.title }}</td>
                     <td>{{ book.author }}</td>
