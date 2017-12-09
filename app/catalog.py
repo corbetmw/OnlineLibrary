@@ -7,6 +7,12 @@ class CatatlogBook(object):
     subject = ''
     publisher = ''
 
+    def __init__(self, title, author, subject, publisher):
+        self.title = title
+        self.author = author
+        self.subject = subject
+        self.publisher = publisher
+
 def searchCatalog(searchString):
     """ Searches the book api with a search string  """
     searchString.replace(" ", "+")
@@ -15,18 +21,23 @@ def searchCatalog(searchString):
     catalogBooks = []
 
     for book in bookJson['docs']:
-        currentTitle = ''
-        currentAuthor = ''
-        currentSubject = ''
-        currentPublisher = ''
-        if book['title']:
+        try:
             currentTitle = book['title']
-        if book['author_name'][0]:
+        except:
+            currentTitle = ''
+        try:
             currentAuthor = book['author_name'][0]
-        if book['subject'][0]:
-            currentAuthor = book['subject'][0]
-        if book['publisher'][0]:
-            currentAuthor = book['publisher'][0]
+        except:
+            currentAuthor = ''
+        try:
+            currentSubject = book['subject'][0]
+        except:
+            currentSubject = ''
+        try:
+            currentPublisher = book['publisher'][0]
+        except:
+            currentPublisher = ''
+
         currentCatalogBook = CatatlogBook(currentTitle,currentAuthor,currentSubject,currentPublisher)
         catalogBooks.append(currentCatalogBook)
 
