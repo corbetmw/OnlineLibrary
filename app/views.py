@@ -3,6 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_GET
+
+from app.book_contoller import *
 from app.models import Book
 from app.catalog import *
 
@@ -59,7 +63,7 @@ def books(request):
     :param request:
     :return:
     """
-    books = Book.objects.all()
+    books = get_all_books()
     context = {'books': books}
     return render(request, 'app/books.html', context)
 
@@ -71,7 +75,7 @@ def book(request, book_id):
     :param book_id:
     :return:
     """
-    book = get_object_or_404(Book, pk=book_id)
+    book = get_book_by_id(book_id)
     return render(request, 'app/book.html', {'book': book})
 
 @login_required
@@ -84,3 +88,25 @@ def catalog(request, searchString = 'the sun also rises'):
     """
     catalogBooks = searchCatalog(searchString)
     return render(request, 'app/catalog.html', {'catalogBooks': catalogBooks})
+
+def checkout_view(request,book):
+    user_id = request.user.id
+
+
+@require_GET
+@csrf_exempt
+def get_all_books_as_json_view(request):
+    """ POST only API Endpoint to get Accounts as JSON. """
+    return HttpResponse(get_all_books_in_json(), content_type = 'application/json')
+
+@require_GET
+@csrf_exempt
+def get_all_users_as_json_view(request):
+    """ POST only API Endpoint to get Accounts as JSON. """
+    return HttpResponse(get_all_users_in_json(), content_type = 'application/json')
+
+@require_GET
+@csrf_exempt
+def get_all_userbooks_as_json_view(request):
+    """ POST only API Endpoint to get Accounts as JSON. """
+    return HttpResponse(get_all_userbooks_in_json(), content_type = 'application/json')
