@@ -16,9 +16,6 @@ def book(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
     return render(request, 'app/book.html', {'book': book})
 
-def catalog(request, searchString):
-    if not searchString:
-        searchString = 'the sun also rises'
-
+def catalog(request, searchString = 'the sun also rises'):
     catalogBooks = searchCatalog(searchString)
     return render(request, 'app/catalog.html', {'catalogBooks': catalogBooks})
