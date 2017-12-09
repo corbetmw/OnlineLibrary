@@ -1,0 +1,16 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+    <div class="center">
+        <h1>
+            {{ book.title }}
+        </h1>
+
+        <b>Author: </b>
+        <p>{{ book.author }}</p><br>
+        <b>Subject: </b>
+        <p>{{ book.subject }}</p><br>
+        <b>Publisher: </b>
+        <p>{{ book.publisher }}</p><br>
+    </div>
+{% endblock %}

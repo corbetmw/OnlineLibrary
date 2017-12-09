@@ -1,0 +1,32 @@
+{% extends "app/base.html" %}
+{% block content %}
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">Welcome to the Online Library</h1>
+          <p>This is an application where you can view an external catalog of books, check them out, and view internal books.</p>
+          <p><a class="btn btn-primary btn-lg" href="/books/" role="button">View Internal Books &raquo;</a></p>
+        </div>
+      </div>
+
+      <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4">
+            <h2>Create An Account</h2>
+            <p>Click the button below to create an account and start getting more features!</p>
+            <p><a class="btn btn-secondary" href="#" role="button">Create Account &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>View External Catalog</h2>
+            <p>Click the button below to view the external catalog! </p>
+            <p><a class="btn btn-secondary" href="/catalog/" role="button">Create Account &raquo;</a></p>
+          </div>
+        </div>
+
+        <hr>
+
+      </div> <!-- /container -->
+
+{% endblock %}

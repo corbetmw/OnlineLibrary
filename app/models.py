@@ -9,12 +9,12 @@ class Book(models.Model):
     publisher = models.TextField()
 
     def __unicode__(self):
-        return u"%s" % self.name
+        return u"%s" % self.title
 
 class UserBook(models.Model):
-    user = models.ForeignKey(User,default=1)
-    book = models.ForeignKey(Book,default=1)
+    user = models.ForeignKey(User,default=1,on_delete=models.CASCADE)
+    book = models.ForeignKey(Book,default=1,on_delete=models.CASCADE)
     active = models.BooleanField()
 
     def __unicode__(self):
-        return u"%s" % self.name
+        return u"%s" % self.id
