@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 app_name="app"
@@ -9,9 +9,11 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('books/',views.books, name='books'),
     path('books/<int:book_id>/', views.book, name='book'),
+    path('mybooks/', views.my_books_view, name='mybooks'),
     path('catalog/search/<str:searchString>', views.catalog, name='catalog'),
     path('catalog/', views.catalog, name='catalog'),
-    path('catalog/checkout/', views.checkout_view, name='checkout_view'),
+    path('catalog/checkoutconfirm/$', views.checkout_confirm_view, name='checkout_confirm'),
+    path('catalog/checkout/', views.checkout, name='checkout'),
     path('createaccount/', views.signup, name='signup'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout, name='logout'),

@@ -2,13 +2,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_POST
 
 from app.book_contoller import *
-from app.models import Book
 from app.catalog import *
+
 
 def signup(request):
     """
@@ -76,7 +76,8 @@ def book(request, book_id):
     :return:
     """
     book = get_book_by_id(book_id)
-    return render(request, 'app/book.html', {'book': book})
+    context = {'book':book}
+    return render(request, 'app/book.html', context)
 
 @login_required
 def catalog(request, searchString = 'the sun also rises'):
@@ -89,24 +90,70 @@ def catalog(request, searchString = 'the sun also rises'):
     catalogBooks = searchCatalog(searchString)
     return render(request, 'app/catalog.html', {'catalogBooks': catalogBooks})
 
-def checkout_view(request,book):
+def my_books_view(request):
+    """
+    The mybooks view. It pulls in the data from the data base and
+    displays it ina table
+    :param request: the HTTP request
+    :return:
+    """
+    myBooks = get_user_books_by_user(request.user.id)
+    context = {'myBooks':myBooks}
+    return render(request, 'app/myBooks.html', context)
+
+
+def checkout_confirm_view(request):
+    """
+    Gets the parameters from the url and renders the checkout template
+    :param request: the request passed by the URL
+    :param title: the title passed by the URL
+    :param author: the author passed by the URL
+    :param subject: the subject passed by the URL
+    :param publisher: the publisher passed by the URL
+    :return:the rendered checkout page
+    """
+    title = request.GET['title']
+    author = request.GET['author']
+    subject = request.GET['subject']
+    publisher = request.GET['publisher']
+
+    catalogBook = CatatlogBook(title,author,subject,publisher)
+    context = {'catalogBook':catalogBook}
+    return render(request, 'app/checkout.html',context)
+
+def checkout(request):
+    """
+    Processes the request and checks ou tthe book for the
+    user in the requst
+    :param request:
+    :return:
+    """
     user_id = request.user.id
+    # populate our values
+    title = request.POST['title']
+    author = request.POST['author']
+    subject = request.POST['subject']
+    publisher = request.POST['publisher']
+    # Generate the book
+    book = Book(title,author,subject,publisher)
+    # Check it out for the current user
+    check_out_book(user_id,book)
+    return  redirect('/mybooks/')
 
-
-@require_GET
+@require_POST
 @csrf_exempt
 def get_all_books_as_json_view(request):
-    """ POST only API Endpoint to get Accounts as JSON. """
+    """ POST only API Endpoint to get Books as JSON. """
     return HttpResponse(get_all_books_in_json(), content_type = 'application/json')
 
-@require_GET
+@require_POST
 @csrf_exempt
 def get_all_users_as_json_view(request):
-    """ POST only API Endpoint to get Accounts as JSON. """
+    """ POST only API Endpoint to get Books as JSON. """
     return HttpResponse(get_all_users_in_json(), content_type = 'application/json')
 
-@require_GET
+@require_POST
 @csrf_exempt
 def get_all_userbooks_as_json_view(request):
-    """ POST only API Endpoint to get Accounts as JSON. """
+    """ POST only API Endpoint to get Books as JSON. """
     return HttpResponse(get_all_userbooks_in_json(), content_type = 'application/json')

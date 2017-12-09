@@ -2,6 +2,8 @@ from django.test import TestCase
 
 # Create your tests here.
 from .book_contoller import *
+from .catalog import *
+
 
 class BookTestCase(TestCase):
 
@@ -50,4 +52,8 @@ class BookTestCase(TestCase):
 
     def test_update_user(self):
         update_user(self)
+
+    def test_search_catalog(self):
+        books = searchCatalog('The Lion, the Witch')
+        print(books)
 

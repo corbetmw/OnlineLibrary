@@ -21,7 +21,9 @@
             {% for catalogBook in catalogBooks %}
                 <tr>
                     <th scope="row">
-                        <a class="btn btn-outline-primary my-2 my-sm-0" href="/catalog/checkout/">Check Out</a>
+                        <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'app:checkout_confirm' %}?title={{ catalogBook.title }}&author={{ catalogBook.author }}&subject={{ catalogBook.subject }}&publisher={{ catalogBook.publisher }}">
+                            Check Out
+                        </a>
                     </th>
                     <td>{{ catalogBook.title }}</td>
                     <td>{{ catalogBook.author }}</td>

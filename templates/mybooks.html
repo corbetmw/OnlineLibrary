@@ -1,0 +1,37 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+    <div id="myBookList">
+    <br>
+    <h1>
+        My Books
+    </h1>
+    <br>
+        <table class="table table-bordered table-striped" id="myBookTable">
+            <thead>
+            <tr>
+                <th scope="col">Details</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Publisher</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for myBook in myBooks %}
+                <tr>
+                    <th scope="row">
+                        <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'app:myBook' myBook.id %}">Details</a>
+                    </th>
+                    <td>{{ myBook.title }}</td>
+                    <td>{{ myBook.author }}</td>
+                    <td>{{ myBook.subject }}</td>
+                    <td>{{ myBook.publisher }}</td>
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -18,3 +18,39 @@ class UserBook(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.id
+
+class Album(models.Model):
+    title = models.TextField()
+    artist = models.TextField()
+    track_count = models.IntegerField()
+    release_year = models.PositiveSmallIntegerField(blank=True, null=True)
+    genre = models.TextField()
+
+    def __unicode__(self):
+        return u"%s" % self.title
+
+class UserAlbum(models.Model):
+    user = models.ForeignKey(User,default=1,on_delete=models.CASCADE)
+    album = models.ForeignKey(Album,default=1,on_delete=models.CASCADE)
+    active = models.BooleanField()
+
+    def __unicode__(self):
+        return u"%s" % self.id
+
+class Movie(models.Model):
+    title = models.TextField()
+    description = models.TextField()
+    director = models.TextField()
+    release_year = models.PositiveSmallIntegerField(blank=True, null=True)
+    genre = models.TextField()
+
+    def __unicode__(self):
+        return u"%s" % self.title
+
+class UserMovie(models.Model):
+    user = models.ForeignKey(User,default=1,on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie,default=1,on_delete=models.CASCADE)
+    active = models.BooleanField()
+
+    def __unicode__(self):
+        return u"%s" % self.id

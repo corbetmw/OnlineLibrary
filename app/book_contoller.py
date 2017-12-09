@@ -49,9 +49,10 @@ def create_book(book):
     """
     Creates a book in the database given a populated book object
     :param book:
-    :return:
+    :return: the id of the book just created
     """
-    book.save()
+    newBook = Book.objects.create(title=book.title,author=book.author,subject=book.subject,publisher=book.publisher)
+    return newBook.id
 
 def update_book(book):
     """
@@ -79,10 +80,11 @@ def check_out_book(user_id,book):
     record int he UserBooks table
     :param user_id:
     :param book:
-    :return:
+    :return: the id of the UserBook justcreated
     """
-    create_book(book)
-    UserBook.objects.create(user_id,book.id)
+    book_id = create_book(book)
+    userbook_id = UserBook.objects.create(user_id,book_id)
+    return userbook_id
 
 def get_all_books_in_json():
     """
