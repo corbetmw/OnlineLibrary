@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app'
+    'app',
+    'myPackage'
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,6 @@ STATICFILES_DIRS = (
 
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
+
+LOGIN_URL = '/createaccount/'
+LOGIN_REDIRECT_URL = '/createaccount/'

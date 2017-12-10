@@ -11,6 +11,9 @@ class Book(models.Model):
     def __unicode__(self):
         return u"%s" % self.title
 
+    def __str__(self):
+        return self.title
+
 class UserBook(models.Model):
     user = models.ForeignKey(User,default=1,on_delete=models.CASCADE)
     book = models.ForeignKey(Book,default=1,on_delete=models.CASCADE)
@@ -18,6 +21,9 @@ class UserBook(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.id
+
+    def __str__(self):
+        return self.id
 
 class Album(models.Model):
     title = models.TextField()
@@ -29,6 +35,9 @@ class Album(models.Model):
     def __unicode__(self):
         return u"%s" % self.title
 
+    def __str__(self):
+        return self.title
+
 class UserAlbum(models.Model):
     user = models.ForeignKey(User,default=1,on_delete=models.CASCADE)
     album = models.ForeignKey(Album,default=1,on_delete=models.CASCADE)
@@ -36,6 +45,9 @@ class UserAlbum(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.id
+
+    def __str__(self):
+        return self.id
 
 class Movie(models.Model):
     title = models.TextField()
@@ -47,6 +59,9 @@ class Movie(models.Model):
     def __unicode__(self):
         return u"%s" % self.title
 
+    def __str__(self):
+        return self.title
+
 class UserMovie(models.Model):
     user = models.ForeignKey(User,default=1,on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie,default=1,on_delete=models.CASCADE)
@@ -54,3 +69,6 @@ class UserMovie(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.id
+
+    def __str__(self):
+        return self.id
