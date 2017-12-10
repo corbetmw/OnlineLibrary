@@ -46,10 +46,11 @@
         {% if not user.is_authenticated %}
 
             <form class="form-inline my-2 my-lg-0" method="POST" action="{% url "app:login" %}">
-                 {% csrf_token %}
+                {% csrf_token %}
                 <div class="input-group">
                     <span class="input-group-addon"><i class="ion-person"></i></span>
-                    <input class="form-control mr-sm-2" type="text" name="username" placeholder="Username" aria-label="Search">
+                    <input class="form-control mr-sm-2" type="text" name="username" placeholder="Username"
+                           aria-label="Search">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="ion-lock-combination"></i></span>
@@ -76,9 +77,13 @@
     </div>
 </main>
 
-<footer class="container">
-    <p>&copy; Matthew Corbett 2017</p>
+
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted">&copy; Matthew Corbett 2017</span>
+    </div>
 </footer>
+
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

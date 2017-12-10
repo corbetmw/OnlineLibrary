@@ -1,7 +1,7 @@
 {% extends "app/base.html" %}
 
 {% block content %}
-    <div id="myBookList">
+    <div class="center">
     <br>
     <h1>
         My Books
@@ -21,7 +21,7 @@
             {% for myBook in myBooks %}
                 <tr>
                     <th scope="row">
-                        <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'app:myBook' myBook.id %}">Details</a>
+                        <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'app:book' myBook.id %}">Details</a>
                     </th>
                     <td>{{ myBook.title }}</td>
                     <td>{{ myBook.author }}</td>

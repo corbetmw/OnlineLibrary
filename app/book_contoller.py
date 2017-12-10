@@ -83,7 +83,7 @@ def check_out_book(user_id,book):
     :return: the id of the UserBook justcreated
     """
     book_id = create_book(book)
-    userbook_id = UserBook.objects.create(user_id,book_id)
+    userbook_id = UserBook.objects.create(user_id=user_id,book_id=book_id,active=True)
     return userbook_id
 
 def get_all_books_in_json():

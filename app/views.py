@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -45,8 +45,14 @@ def login_view(request):
         return HttpResponse('Your login failed')
 
 def logout_view(request):
-    logout(request);
-    return render(request,'app/base.html')
+    """
+    logs the current user out given thei request
+    :param request:
+    :return: The render of the homepage
+    """
+    logout(request)
+
+    return HttpResponseRedirect('/')
 
 def index(request):
     """
@@ -85,10 +91,18 @@ def catalog(request, searchString = 'the sun also rises'):
     The catalog view. It pulls in the data from the api and makes a table
     :param request:
     :param searchString:
-    :return:
+    :return:The rendered catalog template
     """
-    catalogBooks = searchCatalog(searchString)
-    return render(request, 'app/catalog.html', {'catalogBooks': catalogBooks})
+    searchBoxString = request.POST.get('searchBoxString')
+
+    if searchBoxString:
+        catalogBooks = searchCatalog(searchBoxString)
+    else:
+        catalogBooks = searchCatalog(searchString)
+
+
+    context = {'catalogBooks': catalogBooks}
+    return render(request, 'app/catalog.html', context)
 
 def my_books_view(request):
     """
@@ -99,7 +113,7 @@ def my_books_view(request):
     """
     myBooks = get_user_books_by_user(request.user.id)
     context = {'myBooks':myBooks}
-    return render(request, 'app/myBooks.html', context)
+    return render(request, 'app/mybooks.html', context)
 
 
 def checkout_confirm_view(request):
@@ -135,7 +149,7 @@ def checkout(request):
     subject = request.POST['subject']
     publisher = request.POST['publisher']
     # Generate the book
-    book = Book(title,author,subject,publisher)
+    book = Book(title=title,author=author,subject=subject,publisher=publisher)
     # Check it out for the current user
     check_out_book(user_id,book)
     return  redirect('/mybooks/')

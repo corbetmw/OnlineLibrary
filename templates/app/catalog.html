@@ -2,11 +2,24 @@
 
 {% block content %}
     <div id="bookList">
-    <br>
-    <h1>
-        External Catalog
-    </h1>
-    <br>
+        <br>
+        <h1>
+            External Catalog
+        </h1>
+        <br>
+        <form method="POST" action="{% url "app:catalog" %}">
+            {% csrf_token %}
+            <div class="input-group input-group-lg">
+                <input type="text" class="form-control" name="searchBoxString" placeholder="Search for..." aria-label="Search"
+                       aria-describedby="sizing-addon1">
+                <span class="input-group-btn" id="sizing-addon1">
+                        <button class="btn btn-outline-info" type="submit">
+                                <span class="ion-search"></span>
+                        </button>
+                </span>
+            </div>
+        </form>
+        <br>
         <table class="table table-bordered table-striped" id="bookTable">
             <thead>
             <tr>
@@ -21,7 +34,8 @@
             {% for catalogBook in catalogBooks %}
                 <tr>
                     <th scope="row">
-                        <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'app:checkout_confirm' %}?title={{ catalogBook.title }}&author={{ catalogBook.author }}&subject={{ catalogBook.subject }}&publisher={{ catalogBook.publisher }}">
+                        <a class="btn btn-outline-primary my-2 my-sm-0"
+                           href="{% url 'app:checkout_confirm' %}?title={{ catalogBook.title }}&author={{ catalogBook.author }}&subject={{ catalogBook.subject }}&publisher={{ catalogBook.publisher }}">
                             Check Out
                         </a>
                     </th>
